@@ -148,26 +148,16 @@ read -r -p "3. Kullanılacak Dış (Host) Port [$AUTO_FREE_PORT]: " CHOSEN_PORT
 CHOSEN_PORT=${CHOSEN_PORT:-$AUTO_FREE_PORT}
 
 # Soru 4: Yönetici Paneli Şifresi (Admin Token)
-echo -e "\n   ${CYAN}ℹ️  /admin paneli için güçlü bir şifre giriniz (Otomatik Argon2id hash üretilecektir).${NC}"
-read -r -s -p "4. Admin Paneli Şifresi (Boş bırakılırsa rastgele 24 karakter üretilir): " ADMIN_PASS_INPUT
+echo -e "\n   ${CYAN}ℹ️  /admin paneli için admin token şifresi belirleyiniz.${NC}"
+read -r -s -p "4. Admin Paneli Şifresi (Boş bırakılırsa güçlü rastgele 32 karakter üretilir): " ADMIN_PASS_INPUT
 echo ""
 
 if [ -z "$ADMIN_PASS_INPUT" ]; then
-    ADMIN_PASS_INPUT=$(tr -dc A-Za-z0-9!#%_ 2>/dev/null </dev/urandom | head -c 24 || openssl rand -base64 18)
+    ADMIN_PASS_INPUT=$(tr -dc A-Za-z0-9!#%_ 2>/dev/null </dev/urandom | head -c 32 || openssl rand -base64 24)
     GENERATED_RANDOM_PASS=true
 else
     GENERATED_RANDOM_PASS=false
 fi
-
-echo -e "${CYAN}🔑 Argon2id hash üretiliyor (vaultwarden/server:1.37.1 kullanılarak)...${NC}"
-RAW_HASH=$(echo -n "$ADMIN_PASS_INPUT" | docker run --rm -i vaultwarden/server:1.37.1 /vaultwarden hash 2>/dev/null | tr -d '\r\n')
-
-if [ -z "$RAW_HASH" ] || [[ ! "$RAW_HASH" =~ "argon2" ]]; then
-    RAW_HASH=$(echo -n "$ADMIN_PASS_INPUT" | docker run --rm -i vaultwarden/server:latest /vaultwarden hash 2>/dev/null | tr -d '\r\n')
-fi
-
-# Docker Compose için '$' karakterlerini '$$' yap
-ESCAPED_ADMIN_TOKEN="${RAW_HASH//\$/\$\$}"
 
 # Soru 5: Yeni Kayıtlara İzin Verilsin mi?
 echo -e "\n5. Yeni kullanıcı kayıtları açık olsun mu?"
@@ -180,13 +170,17 @@ else
     SIGNUPS_ALLOWED="false"
 fi
 
-# 6. DİZİN VE DOSYA İZİNLERİNİ HAZIRLAMA
-echo -e "\n${BLUE}📁 [3/6] Dizinler oluşturuluyor ve dosya izinleri ayarlanıyor...${NC}"
+# 6. DOCKER İMAJINI ÖNCEDEN ÇEKME (İlerleme Çubuğu ile)
+echo -e "\n${BLUE}📥 [3/6] Vaultwarden (v1.37.1) Docker İmajı Kontrol Ediliyor/İndiriliyor...${NC}"
+docker pull vaultwarden/server:1.37.1
+
+# 7. DİZİN VE DOSYA İZİNLERİNİ HAZIRLAMA
+echo -e "\n${BLUE}📁 [4/6] Dizinler oluşturuluyor ve dosya izinleri ayarlanıyor...${NC}"
 mkdir -p "$INSTALL_DIR/data"
 mkdir -p "$INSTALL_DIR/backups"
 
-# 7. DOCKER-COMPOSE.YML VE .ENV OLUŞTURMA
-echo -e "${BLUE}⚙️  [4/6] Yapılandırma dosyaları hazırlanıyor...${NC}"
+# 8. DOCKER-COMPOSE.YML VE .ENV OLUŞTURMA
+echo -e "${BLUE}⚙️  [5/6] Yapılandırma dosyaları hazırlanıyor...${NC}"
 
 # .env Dosyası
 cat <<EOF > "$INSTALL_DIR/.env"
@@ -203,8 +197,8 @@ SIGNUPS_ALLOWED=$SIGNUPS_ALLOWED
 INVITATIONS_ALLOWED=true
 SHOW_PASSWORD_HINT=false
 
-# 3. Yönetici Paneli Token (Argon2id Hash)
-ADMIN_TOKEN=$ESCAPED_ADMIN_TOKEN
+# 3. Yönetici Paneli Token
+ADMIN_TOKEN=$ADMIN_PASS_INPUT
 
 # 4. Ağ ve Proxy Ayarları
 IP_HEADER=X-Forwarded-For
@@ -223,6 +217,7 @@ TRASH_AUTO_DELETE_DAYS=30
 LOG_LEVEL=info
 EXTENDED_LOGGING=true
 EOF
+
 
 # docker-compose.yml Dosyası
 cat <<EOF > "$INSTALL_DIR/docker-compose.yml"
