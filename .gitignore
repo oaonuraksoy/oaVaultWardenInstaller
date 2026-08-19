@@ -1,0 +1,58 @@
+# ==========================================
+# 🍎 macOS Sistem ve Metadata Dosyaları
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon
+Icon?
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+
+# ==========================================
+# 🪟 Windows & Linux Thumbnail / Geçici Dosyalar
+# ==========================================
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# ==========================================
+# 💻 IDE & Editör Kalıntıları
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# 🔒 Hassas Bilgi & Ortam Dosyaları
+# ==========================================
+.env
+*.env.local
+*.env.*.local
+
+# ==========================================
+# 💾 Kurulum & Veri / Yedek Dizinleri
+# ==========================================
+/data/
+/backups/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.tar.gz
+*.log

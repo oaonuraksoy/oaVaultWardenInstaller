@@ -16,14 +16,14 @@
 
 ### 🐧 1. AlmaLinux 8 / Rocky Linux 8 / RHEL 8 İçin:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/onuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-almalinux8.sh -o install-vaultwarden-almalinux8.sh \
+curl -fsSL https://raw.githubusercontent.com/oaonuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-almalinux8.sh -o install-vaultwarden-almalinux8.sh \
   && chmod +x install-vaultwarden-almalinux8.sh \
   && sudo ./install-vaultwarden-almalinux8.sh
 ```
 
 ### 🍥 2. Debian 11/12 & Ubuntu 20.04/22.04/24.04 İçin:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/onuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-debian.sh -o install-vaultwarden-debian.sh \
+curl -fsSL https://raw.githubusercontent.com/oaonuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-debian.sh -o install-vaultwarden-debian.sh \
   && chmod +x install-vaultwarden-debian.sh \
   && sudo ./install-vaultwarden-debian.sh
 ```
@@ -34,14 +34,14 @@ curl -fsSL https://raw.githubusercontent.com/onuraksoy/oaVaultWardenInstaller/ma
 
 ### AlmaLinux 8 / RHEL 8:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/onuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-almalinux8.sh -o install-vaultwarden-almalinux8.sh
+curl -fsSL https://raw.githubusercontent.com/oaonuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-almalinux8.sh -o install-vaultwarden-almalinux8.sh
 chmod +x install-vaultwarden-almalinux8.sh
 sudo ./install-vaultwarden-almalinux8.sh
 ```
 
 ### Debian / Ubuntu:
 ```bash
-curl -fsSL https://raw.githubusercontent.com/onuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-debian.sh -o install-vaultwarden-debian.sh
+curl -fsSL https://raw.githubusercontent.com/oaonuraksoy/oaVaultWardenInstaller/main/install-vaultwarden-debian.sh -o install-vaultwarden-debian.sh
 chmod +x install-vaultwarden-debian.sh
 sudo ./install-vaultwarden-debian.sh
 ```
