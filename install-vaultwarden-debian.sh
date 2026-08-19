@@ -126,11 +126,15 @@ read -r -p "1. Kurulum Dizini [$DEFAULT_INSTALL_DIR]: " INSTALL_DIR
 INSTALL_DIR=${INSTALL_DIR:-$DEFAULT_INSTALL_DIR}
 
 # Soru 2: Alan Adı (Domain / URL)
-read -r -p "2. Vaultwarden Alan Adı (Örn: vault.ornekdomain.com): " USER_DOMAIN
-while [ -z "$USER_DOMAIN" ]; do
-    echo -e "${RED}⚠️ Alan adı boş bırakılamaz (Passkey/FIDO2 ve istemci uyumluluğu için gereklidir).${NC}"
-    read -r -p "Vaultwarden Alan Adı: " USER_DOMAIN
-done
+SERVER_HOST=$(hostname -f 2>/dev/null || hostname 2>/dev/null || echo "localhost")
+if [[ "$SERVER_HOST" == *"."* ]]; then
+    DEFAULT_DOMAIN="vault.${SERVER_HOST#*.}"
+else
+    DEFAULT_DOMAIN="vault.localhost"
+fi
+
+read -r -p "2. Vaultwarden Alan Adı [$DEFAULT_DOMAIN]: " USER_DOMAIN
+USER_DOMAIN=${USER_DOMAIN:-$DEFAULT_DOMAIN}
 
 # Domain başına https:// ekleme
 if [[ ! "$USER_DOMAIN" =~ ^https?:// ]]; then
@@ -138,6 +142,7 @@ if [[ ! "$USER_DOMAIN" =~ ^https?:// ]]; then
 else
     VAULT_DOMAIN="$USER_DOMAIN"
 fi
+
 
 # Soru 3: Dış Port (Host Port)
 echo -e "\n   ${CYAN}ℹ️  Otomatik tespit edilen ilk boş port: ${BOLD}$AUTO_FREE_PORT${NC}"
