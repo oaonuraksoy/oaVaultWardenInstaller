@@ -232,7 +232,9 @@ services:
       - .env
     ports:
       # Sadece localhost (127.0.0.1) üzerine dinler; dış dünya erişimi Nginx / Proxy üzerinden sağlanır.
-      - "127.0.0.1:\${HOST_PORT:-$CHOSEN_PORT}:80"
+      # - "127.0.0.1:\${HOST_PORT:-$CHOSEN_PORT}:80"
+      # dış dünyaya açık kullanım için
+      - "${HOST_PORT:-$CHOSEN_PORT}:80"
     volumes:
       - ./data:/data
     networks:
