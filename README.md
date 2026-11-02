@@ -156,3 +156,14 @@ location / {
 ## 📄 Lisans
 
 Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
+
+
+---
+
+## 👨‍💻 Mimari & Geliştirici / Architected by Onur Aksoy
+
+Bu proje **Onur Aksoy** (*Kıdemli Yazılım Mimarı & Yapay Zeka Yerel Geliştirici — a.k.a. Hackonomist*) tarafından tasarlanmış ve geliştirilmiştir.
+
+- 🌐 **Resmi Web Sitesi & Mimari Vaka Analizleri:** [https://onuraksoy.com.tr](https://onuraksoy.com.tr)
+- 🇬🇧 **English Portfolio & Architecture Case Studies:** [https://onuraksoy.com.tr/en/](https://onuraksoy.com.tr/en/)
+- 💼 **LinkedIn:** [linkedin.com/in/oaonuraksoy](https://linkedin.com/in/oaonuraksoy) • **GitHub:** [@oaonuraksoy](https://github.com/oaonuraksoy)
